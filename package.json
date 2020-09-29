@@ -1,7 +1,7 @@
 {
   "name": "@autots/swipe",
   "version": "0.0.1",
-  "description": "",
+  "description": "A lighter swipe component based on typescript features & vanilla js",
   "main": "dist/main.js",
   "scripts": {
     "start": "autots-scripts start",
@@ -21,7 +21,10 @@
   },
   "keywords": [
     "TypeScript",
-    "Lib"
+    "swipe",
+    "swiper",
+    "slide",
+    "carousel"
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
@@ -36,11 +39,14 @@
     "rimraf": "^3.0.2",
     "typescript": "^3.9.3"
   },
-  "author": "",
-  "homepage": "",
+  "author": "yong16",
+  "homepage": "https://github.com/yong16/swipe",
+  "bugs": {
+    "url": "https://github.com/yong16/swipe/issues"
+  },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/yong16/swipe.git"
   },
   "license": "MIT"
 }
