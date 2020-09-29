@@ -75,7 +75,7 @@ new Swipe('#swipe-demo1', {
 
 | Name | Type | Default | Optional | Description |
 |:--|:--|:--|:--|:--|
-| el | (string | NodeListOf<Element>) | - | No | - |
+| el | (string or NodeListOf<Element>) | - | No | - |
 | initIndex | Number | 0 | Yes | Index of initial swipe, start from 0 |
 | loop | Boolean | true | Yes | Whether to enable loop |
 | autoPlay | Number | - | Yes | Autoplay interval (ms) |
