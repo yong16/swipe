@@ -1,0 +1,53 @@
+.swipe {
+  position: relative;
+  overflow: hidden;
+}
+.swipe__container {
+  will-change: transform;
+}
+.swipe__container.transition {
+  -webkit-transition: transform .2s linear;
+  transition: transform .2s linear;
+}
+.swipe-item {
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+.swipe-item img {
+  width: 100%;
+}
+.swipe__dots {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  left: 0;
+  z-index: 99;
+  box-sizing: border-box;
+  width: 100%;
+  height: 15px;
+  padding: 0 14px;
+  font-size: 0;
+  white-space: nowrap;
+  text-align: center;
+  overflow: hidden;
+  pointer-events: none;
+  /* background-color: red; */
+}
+.swipe__dots i {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin: 6px 2px 0;
+  vertical-align: top;
+  background-color: #fff;
+  border-radius: 2px;
+  opacity: .2;
+  overflow: hidden;
+  transition: opacity .3s linear;
+}
+.swipe__dots i.activate {
+  height: 7px;
+  margin-top: 3px;
+  opacity: 1;
+}

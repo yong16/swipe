@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="format-detection" content="email=no" />
+  <title>swipe</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    * { 
+      margin: 0;
+      padding: 0;
+    }
+    ul li {
+      list-style: none;
+    }
+    .swipe {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="swipe-demo1" class="swipe">
+    <ul class="swipe__container">
+      <li class="swipe-item">
+        <img src="./image/swipe1.jpeg" alt="">
+      </li>
+      <li class="swipe-item">
+        <img src="./image/swipe2.jpeg" alt="">
+      </li>
+      <li class="swipe-item">
+        <img src="./image/swipe3.jpeg" alt="">
+      </li>
+    </ul>
+  </div>
+
+  <div id="swipe-demo2" class="swipe">
+    <div class="swipe__container">
+      <div class="swipe-item">
+          <img src="./image/swipe1.jpeg" alt="">
+      </div>
+      <div class="swipe-item">
+          <img src="./image/swipe2.jpeg" alt="">
+      </div>
+      <div class="swipe-item">
+          <img src="./image/swipe3.jpeg" alt="">
+      </div>
+    </div>
+  </div>
+  <script>
+    // 初始化swipe
+    var swipe = new AutoTs.Swipe('#swipe-demo1', {
+      initIndex: 1,
+      autoPlay: 3000,
+      showDots: true,
+      change: (index) => {}
+    });
+
+    // 初始化swipe2
+    var $swipe = document.querySelector('#swipe-demo2');
+    var swipe2 = new AutoTs.Swipe($swipe, {
+      showDots: true,
+      loop: false
+    });
+  </script>
+</body>
+</html>
