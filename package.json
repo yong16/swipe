@@ -1,6 +1,6 @@
 {
   "name": "@autots/swipe",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A lighter swipe component based on typescript features & vanilla js",
   "main": "dist/main.min.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "esm": "tsc --target ES5 --declaration --importHelpers",
     "clean": "rimraf ./dist",
     "build": "npm run clean && npm run umd && npm run esm",
-    "lint": "eslint ./src --fix --ext .ts"
+    "lint": "eslint ./src --fix --ext .ts",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
@@ -37,6 +38,7 @@
     "autots-scripts": "0.0.5",
     "eslint": "^7.2.0",
     "rimraf": "^3.0.2",
+    "standard-version": "^9.3.0",
     "typescript": "^3.9.3"
   },
   "author": "yong16",
