@@ -9,6 +9,7 @@ public
 .eslintignore
 .eslintrc.js
 .gitignore
+.versionrc.js
 commitlint.config.js
 babel.config.js
 tsconfig.base.json
