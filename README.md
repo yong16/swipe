@@ -66,8 +66,12 @@ new Swipe('#swipe-demo1', {
   const $swipe = document.querySelector('#swipe-demo2');
   var demo = new AutoTs.Swipe($swipe, {
     showDots: true,
-    loop: false
+    loop: false,
   });
+
+  setTimeout(() => {
+    demo.moveTo(2);
+  }, 2000)
 </script>
 ```
 
@@ -81,5 +85,8 @@ new Swipe('#swipe-demo1', {
 | autoPlay | Number | - | Yes | Autoplay interval (ms) |
 | showDots | Boolean | false | Yes | Whether to show indicators |
 | change | Function | - | Yes | Triggered when current swipe change end |
-| moveTo `v0.0.2` | Function | - | Yes | Move to index |
+
+## Events
+| Event Name | Description | Params |
+| moveTo `v0.0.2` | Move to the specified index position | index |
 
