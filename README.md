@@ -87,6 +87,8 @@ new Swipe('#swipe-demo1', {
 | change | Function | - | Yes | Triggered when current swipe change end |
 
 ## Events
+
 | Event Name | Description | Params |
+|:--|:--|:--|
 | moveTo `v0.0.2` | Move to the specified index position | index |
 
