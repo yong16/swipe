@@ -1,6 +1,6 @@
 /*!
  * @autots/swipe v0.0.1
- * Last Modified @ 2021-6-22 4:55:56 ├F10: PM┤
+ * Last Modified @ 2021-6-22 6:24:11 ├F10: PM┤
  * Released under the MIT License.
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -225,7 +225,7 @@ var src_Swipe = /*#__PURE__*/function () {
     } // 设置是否循环播放
 
 
-    this.setLoop(this.options.loop); // 初始化无效 initIndex 值
+    this.setLoop(this.options.loop); // 初始化无效索引值
 
     var maxIndex = this.$li.length - 1 - this.loop.cloneNumber; // 最大索引值
 
@@ -390,7 +390,7 @@ var src_Swipe = /*#__PURE__*/function () {
       }
 
       $dots[this.options.initIndex - this.loop.startIdxAdd].classList.add('activate');
-    } // 设置当前li(卡片)选中
+    } // 给当前索引 item 添加类名
 
   }, {
     key: "setItemClass",
@@ -454,7 +454,7 @@ var src_Swipe = /*#__PURE__*/function () {
 
       this.setTranslate(this.$ul, _w); // 设置指示器选中效果
 
-      this.setDotsClass(); // item 添加选中class
+      this.setDotsClass(); // 设置当前索引 item 的类名
 
       this.setItemClass(); // 触发结束回调
 
@@ -531,7 +531,7 @@ var src_Swipe = /*#__PURE__*/function () {
 
       var _w = -this.options.initIndex * this.swipeW;
 
-      this.setTranslate(this.$ul, _w); // 设置class
+      this.setTranslate(this.$ul, _w); // 设置选中类名
 
       this.setItemClass();
       this.setDotsClass();

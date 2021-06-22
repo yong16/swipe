@@ -2,7 +2,7 @@
   "name": "@autots/swipe",
   "version": "0.0.1",
   "description": "A lighter swipe component based on typescript features & vanilla js",
-  "main": "dist/main.js",
+  "main": "dist/main.min.js",
   "scripts": {
     "start": "autots-scripts start",
     "umd": "autots-scripts build",

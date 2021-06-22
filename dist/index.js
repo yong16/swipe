@@ -45,7 +45,7 @@ var Swipe = /** @class */ (function () {
         }
         // 设置是否循环播放
         this.setLoop(this.options.loop);
-        // 初始化无效 initIndex 值
+        // 初始化无效索引值
         var maxIndex = this.$li.length - 1 - this.loop.cloneNumber; // 最大索引值
         if (initIndex > maxIndex || initIndex < 0) {
             this.options.initIndex = 0 + this.loop.startIdxAdd;
@@ -178,7 +178,7 @@ var Swipe = /** @class */ (function () {
         }
         $dots[this.options.initIndex - this.loop.startIdxAdd].classList.add('activate');
     };
-    // 设置当前li(卡片)选中
+    // 给当前索引 item 添加类名
     Swipe.prototype.setItemClass = function () {
         var len = this.swipeItemsLen;
         for (var i = 0; i < len; i++) {
@@ -225,7 +225,7 @@ var Swipe = /** @class */ (function () {
         this.setTranslate(this.$ul, _w);
         // 设置指示器选中效果
         this.setDotsClass();
-        // item 添加选中class
+        // 设置当前索引 item 的类名
         this.setItemClass();
         // 触发结束回调
         if (change && typeof change === 'function') {
@@ -286,7 +286,7 @@ var Swipe = /** @class */ (function () {
         this.addTransition(this.$ul);
         var _w = -this.options.initIndex * this.swipeW;
         this.setTranslate(this.$ul, _w);
-        // 设置class
+        // 设置选中类名
         this.setItemClass();
         this.setDotsClass();
     };
