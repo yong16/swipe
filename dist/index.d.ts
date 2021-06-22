@@ -1,4 +1,4 @@
-interface swipeOptions {
+interface SwipeOptions {
     initIndex?: number;
     autoPlay?: number;
     showDots?: boolean;
@@ -6,7 +6,7 @@ interface swipeOptions {
     change?: (index: number) => void;
 }
 export default class Swipe {
-    options: swipeOptions;
+    options: SwipeOptions;
     swipeEl: HTMLElement;
     swipeW: number;
     private $ul;
@@ -25,7 +25,8 @@ export default class Swipe {
         startIdxAdd: number;
     };
     destroy: () => void;
-    constructor(el: HTMLElement | string, options: swipeOptions);
+    moveTo: (index: number) => void;
+    constructor(el: HTMLElement | string, options: SwipeOptions);
     /**
      * touchstart
      * @param {TouchEvent} e
@@ -44,6 +45,7 @@ export default class Swipe {
     private clearAutoPlay;
     private initDots;
     private setDotsClass;
+    private setItemClass;
     /**
      * 添加切换时的过渡效果
      * @param {HTMLElement} el
@@ -71,6 +73,11 @@ export default class Swipe {
      * @param {boolean} isLoop 是否循环播放
      */
     setLoop(isLoop: boolean): void;
+    /**
+     * 移动到指定索引位置
+     * @param {number} idx
+     */
+    moveToPosition(idx: number): void;
     /**
      * 初始化
      */

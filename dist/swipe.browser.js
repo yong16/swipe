@@ -1,6 +1,6 @@
 /*!
  * @autots/swipe v0.0.1
- * Last Modified @ 2020-9-29 8:40:24 ├F10: PM┤
+ * Last Modified @ 2021-6-22 4:55:56 ├F10: PM┤
  * Released under the MIT License.
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -200,6 +200,8 @@ var getPos = function getPos(e) {
   };
 };
 
+var isTouchMoving = false;
+
 var src_Swipe = /*#__PURE__*/function () {
   function Swipe(el, options) {
     classCallCheck_default()(this, Swipe);
@@ -210,16 +212,15 @@ var src_Swipe = /*#__PURE__*/function () {
       startY: 0,
       endX: 0,
       endY: 0,
-      distanceX: 0 // 移动的横向距离
-
+      distanceX: 0
     };
     this.loop = {
       timer: 0,
       cloneNumber: 2,
-      startIdxAdd: 1 // 循环播放时，默认初始位置 + 1
-
+      startIdxAdd: 1
     };
     this.destroy = this.destroyed;
+    this.moveTo = this.moveToPosition;
     this.options = Object.assign({
       initIndex: 0,
       loop: true
@@ -238,14 +239,22 @@ var src_Swipe = /*#__PURE__*/function () {
 
     var _this$options = this.options,
         autoPlay = _this$options.autoPlay,
-        loop = _this$options.loop;
+        loop = _this$options.loop,
+        initIndex = _this$options.initIndex;
 
     if (autoPlay && !loop) {
       this.options.loop = true;
     } // 设置是否循环播放
 
 
-    this.setLoop(this.options.loop); // 初始化方法
+    this.setLoop(this.options.loop); // 初始化无效 initIndex 值
+
+    var maxIndex = this.$li.length - 1 - this.loop.cloneNumber; // 最大索引值
+
+    if (initIndex > maxIndex || initIndex < 0) {
+      this.options.initIndex = 0 + this.loop.startIdxAdd;
+    } // 初始化方法
+
 
     this.init();
   }
@@ -258,6 +267,7 @@ var src_Swipe = /*#__PURE__*/function () {
   createClass_default()(Swipe, [{
     key: "onTouchStart",
     value: function onTouchStart(e) {
+      isTouchMoving = true;
       this.pos.startX = getPos(e).x;
       this.pos.startY = getPos(e).y; // 清除自动播放
 
@@ -275,17 +285,30 @@ var src_Swipe = /*#__PURE__*/function () {
       this.pos.endY = getPos(e).y;
       var distanceX = this.pos.endX - this.pos.startX;
       var distanceY = this.pos.endY - this.pos.startY;
-      this.pos.distanceX = distanceX; // 判断为横向滑动
+      this.pos.distanceX = distanceX; // 判断滑动方向
 
-      if (Math.abs(distanceX) > Math.abs(distanceY)) {
-        e.stopPropagation();
+      if (Math.abs(distanceX) < Math.abs(distanceY)) return; // 竖向滑动
+      // 横向滑动时
+
+      if (isTouchMoving) {
+        // e.stopPropagation();
         e.preventDefault();
         this.removeTransition(this.$ul);
+        isTouchMoving = false;
+      } // 非循环时，设置第一张和最后一张滑动边界时不发生位移
 
-        var _w = -this.options.initIndex * this.swipeW + distanceX;
 
-        this.setTranslate(this.$ul, _w);
+      var _this$options2 = this.options,
+          loop = _this$options2.loop,
+          initIndex = _this$options2.initIndex;
+
+      if (!loop && (initIndex === 0 && distanceX > 0 || initIndex === this.swipeItemsLen - 1 && distanceX < 0)) {
+        return;
       }
+
+      var _w = -this.options.initIndex * this.swipeW + distanceX;
+
+      this.setTranslate(this.$ul, _w);
     }
     /**
      * touchend
@@ -294,7 +317,8 @@ var src_Swipe = /*#__PURE__*/function () {
   }, {
     key: "onTouchEnd",
     value: function onTouchEnd() {
-      // 滑动距离超过 容器宽度 1/5 视为有效切换，否则回弹
+      isTouchMoving = false; // 滑动距离超过 容器宽度 1/5 视为有效切换，否则回弹
+
       if (Math.abs(this.pos.distanceX) > this.swipeW / 5) {
         if (this.pos.distanceX > 0) {
           this.options.initIndex--;
@@ -303,22 +327,24 @@ var src_Swipe = /*#__PURE__*/function () {
         }
       }
 
-      var _this$options2 = this.options,
-          initIndex = _this$options2.initIndex,
-          loop = _this$options2.loop; // 非循环播放
+      var _this$options3 = this.options,
+          initIndex = _this$options3.initIndex,
+          loop = _this$options3.loop; // 添加过渡
 
       if (!loop) {
+        // 非循环播放
         if (initIndex < 0) {
           this.options.initIndex = 0;
-        }
-
-        if (initIndex > this.swipeItemsLen - 1) {
+        } else if (initIndex > this.swipeItemsLen - 1) {
           this.options.initIndex = this.swipeItemsLen - 1;
+        } else {
+          this.addTransition(this.$ul);
         }
-      } // 添加过渡，设置位移
+      } else {
+        this.addTransition(this.$ul);
+      } // 设置位移
+      // this.addTransition(this.$ul);
 
-
-      this.addTransition(this.$ul);
 
       var _w = -this.options.initIndex * this.swipeW;
 
@@ -386,6 +412,18 @@ var src_Swipe = /*#__PURE__*/function () {
       }
 
       $dots[this.options.initIndex - this.loop.startIdxAdd].classList.add('activate');
+    } // 设置当前li(卡片)选中
+
+  }, {
+    key: "setItemClass",
+    value: function setItemClass() {
+      var len = this.swipeItemsLen;
+
+      for (var i = 0; i < len; i++) {
+        this.$li[i].classList.remove('activate');
+      }
+
+      this.$li[this.options.initIndex].classList.add('activate');
     }
     /**
      * 添加切换时的过渡效果
@@ -416,10 +454,10 @@ var src_Swipe = /*#__PURE__*/function () {
   }, {
     key: "onTransEnd",
     value: function onTransEnd() {
-      var _this$options3 = this.options,
-          initIndex = _this$options3.initIndex,
-          loop = _this$options3.loop,
-          change = _this$options3.change; // 循环播放
+      var _this$options4 = this.options,
+          initIndex = _this$options4.initIndex,
+          loop = _this$options4.loop,
+          change = _this$options4.change; // 循环播放
 
       if (loop) {
         // 右滑过最后一张，显示第一张图
@@ -438,7 +476,9 @@ var src_Swipe = /*#__PURE__*/function () {
 
       this.setTranslate(this.$ul, _w); // 设置指示器选中效果
 
-      this.setDotsClass(); // 触发结束回调
+      this.setDotsClass(); // item 添加选中class
+
+      this.setItemClass(); // 触发结束回调
 
       if (change && typeof change === 'function') {
         var _idx = this.options.initIndex;
@@ -479,7 +519,6 @@ var src_Swipe = /*#__PURE__*/function () {
         return;
       }
 
-      ;
       this.options.initIndex += this.loop.startIdxAdd; // 复制头尾两张图
 
       var cloneFirst = this.$li[0].cloneNode(true);
@@ -487,6 +526,37 @@ var src_Swipe = /*#__PURE__*/function () {
       this.$ul.insertBefore(cloneLast, this.$li[0]);
       this.$ul.appendChild(cloneFirst);
       this.$li = Array.from(this.$ul.querySelectorAll('.swipe-item'));
+    }
+    /**
+     * 移动到指定索引位置
+     * @param {number} idx
+     */
+
+  }, {
+    key: "moveToPosition",
+    value: function moveToPosition(idx) {
+      // 无效索引值
+      var maxIndex = this.swipeItemsLen - 1 - this.loop.cloneNumber;
+
+      if (idx > maxIndex || idx < 0) {
+        return;
+      }
+
+      if (this.options.loop) {
+        this.options.initIndex = idx + 1;
+      } else {
+        this.options.initIndex = idx;
+      } // 添加过渡，设置位移
+
+
+      this.addTransition(this.$ul);
+
+      var _w = -this.options.initIndex * this.swipeW;
+
+      this.setTranslate(this.$ul, _w); // 设置class
+
+      this.setItemClass();
+      this.setDotsClass();
     }
     /**
      * 初始化
@@ -499,9 +569,9 @@ var src_Swipe = /*#__PURE__*/function () {
 
       // 容器宽度
       this.swipeW = this.swipeEl.clientWidth; // 设置ul 宽度
+      // const $ul = this.swipeEl.querySelector('.swipe__container') as HTMLElement;
 
-      var $ul = this.swipeEl.querySelector('.swipe__container');
-      $ul.style.width = "".concat(this.swipeW * this.$li.length, "px"); // 设置每个 li 宽度
+      this.$ul.style.width = "".concat(this.swipeW * this.$li.length, "px"); // 设置每个 li 宽度
 
       this.$li.forEach(function (item) {
         item.style.width = "".concat(_this2.swipeW, "px");
@@ -512,7 +582,9 @@ var src_Swipe = /*#__PURE__*/function () {
 
       var _w = -this.options.initIndex * this.swipeW;
 
-      this.setTranslate(this.$ul, _w); // 处理自动播放
+      this.setTranslate(this.$ul, _w); // item 添加选中class
+
+      this.setItemClass(); // 处理自动播放
 
       this.autoPlay(); // 监听切换动画结束事件
 

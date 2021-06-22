@@ -6,8 +6,8 @@
   will-change: transform;
 }
 .swipe__container.transition {
-  -webkit-transition: transform .2s linear;
-  transition: transform .2s linear;
+  -webkit-transition: transform 0.3s linear;
+  transition: transform 0.3s linear;
 }
 .swipe-item {
   float: left;
