@@ -1,2 +1,15 @@
 node_modules
 package-lock.json
+src
+public
+
+# 忽略指定文件
+*.map
+.browserslistrc
+.eslintignore
+.eslintrc.js
+.gitignore
+commitlint.config.js
+babel.config.js
+tsconfig.base.json
+tsconfig.json

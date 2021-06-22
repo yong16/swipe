@@ -81,3 +81,5 @@ new Swipe('#swipe-demo1', {
 | autoPlay | Number | - | Yes | Autoplay interval (ms) |
 | showDots | Boolean | false | Yes | Whether to show indicators |
 | change | Function | - | Yes | Triggered when current swipe change end |
+| moveTo `v0.0.2` | Function | - | Yes | Move to index |
+
